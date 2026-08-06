@@ -1,0 +1,17 @@
+/*============================================================================================*/
+/* Your custom styles below */
+/*============================================================================================*/
+
+.review_card .user_info figure.avatar-initials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 auto 10px;
+    letter-spacing: 1px;
+}
