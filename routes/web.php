@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\Admin\BookingController as AdminBookingController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\CuisineController as AdminCuisineController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\RestaurantController as AdminRestaurantController;
 use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
+use App\Http\Controllers\Admin\SettingsController as AdminSettingsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BookingController;
@@ -53,4 +56,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('reviews', [AdminReviewController::class, 'index'])->name('reviews.index');
     Route::patch('reviews/{review}', [AdminReviewController::class, 'update'])->name('reviews.update');
     Route::delete('reviews/{review}', [AdminReviewController::class, 'destroy'])->name('reviews.destroy');
+
+    Route::get('categories', [AdminCategoryController::class, 'index'])->name('categories.index');
+    Route::post('categories', [AdminCategoryController::class, 'store'])->name('categories.store');
+    Route::delete('categories/{category}', [AdminCategoryController::class, 'destroy'])->name('categories.destroy');
+
+    Route::get('cuisines', [AdminCuisineController::class, 'index'])->name('cuisines.index');
+    Route::post('cuisines', [AdminCuisineController::class, 'store'])->name('cuisines.store');
+    Route::delete('cuisines/{cuisine}', [AdminCuisineController::class, 'destroy'])->name('cuisines.destroy');
+
+    Route::get('settings', [AdminSettingsController::class, 'edit'])->name('settings.edit');
+    Route::put('settings', [AdminSettingsController::class, 'update'])->name('settings.update');
 });

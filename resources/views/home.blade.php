@@ -8,18 +8,19 @@
 
 @section('content')
 
-<div class="hero_single version_2">
+@php $heroUrl = \App\Models\SiteSetting::getValue('home_section_1'); @endphp
+<div class="hero_single version_2"{{ $heroUrl ? ' style="background-image: url('.asset('storage/'.$heroUrl).');"' : '' }}>
     <div class="opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.6)">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xl-9 col-lg-10 col-md-8">
-                    <h1>Discover &amp; Book</h1>
-                    <p>The best restaurants at the best price</p>
+                    <h1>{{ \App\Models\SiteSetting::getValue('home_hero_title') ?? 'Discover & Book' }}</h1>
+                    <p>{{ \App\Models\SiteSetting::getValue('home_hero_subtitle') ?? 'The best restaurants at the best price' }}</p>
                     <form method="get" action="{{ route('restaurants.index') }}">
                         <div class="row g-0 custom-search-input">
                             <div class="col-lg-8">
                                 <div class="form-group">
-                                    <input class="form-control" type="text" name="q" placeholder="Search restaurants, cuisines..." value="{{ request('q') }}">
+                                    <input class="form-control" type="text" name="q" placeholder="Search restaurants..." value="{{ request('q') }}">
                                     <i class="icon_search"></i>
                                 </div>
                             </div>
@@ -49,9 +50,6 @@
                     <span>{{ $category->restaurants_count ?? '' }}</span>
                     <i class="{{ $category->icon ?? 'icon-food_icon_pizza' }}"></i>
                     <h3>{{ $category->name }}</h3>
-                    @if($category->avg_price)
-                        <small>Avg price {{ $category->avg_price }}</small>
-                    @endif
                 </a>
             </div>
             @endforeach
@@ -98,7 +96,7 @@
     </div>
     @endif
 
-    <div class="banner lazy" data-bg="url({{ asset('img/banner_bg_desktop.jpg') }})">
+    <div class="banner lazy" data-bg="url({{ \App\Models\SiteSetting::imageUrl('banner_bg_desktop', 'img/banner_bg_desktop.jpg') }})">
         <div class="wrapper d-flex align-items-center opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.2)">
             <div>
                 <small>foogra</small>
@@ -172,7 +170,7 @@
     </div>
     @endif
 
-    <div class="call_section lazy" data-bg="url({{ asset('img/bg_call_section.jpg') }})">
+    <div class="call_section lazy" data-bg="url({{ \App\Models\SiteSetting::imageUrl('bg_call_section', 'img/bg_call_section.jpg') }})">
         <div class="container clearfix">
             <div class="col-lg-5 col-md-6 float-end wow">
                 <div class="box_1">

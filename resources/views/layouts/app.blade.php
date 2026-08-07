@@ -19,7 +19,7 @@
     <div class="container">
         <div id="logo">
             <a href="{{ route('home') }}">
-                <img src="{{ asset('img/logo_sticky.png') }}" width="140" height="35" alt="Foogra">
+                <img src="{{ \App\Models\SiteSetting::imageUrl('logo_sticky', 'img/logo_sticky.png') }}" width="140" height="35" alt="Foogra">
             </a>
         </div>
         <ul id="top_menu">
@@ -35,7 +35,7 @@
                 <a href="#0" class="open_close">
                     <i class="icon_close"></i><span>Menu</span>
                 </a>
-                <a href="{{ route('home') }}"><img src="{{ asset('img/logo.png') }}" width="140" height="35" alt=""></a>
+                <a href="{{ route('home') }}"><img src="{{ \App\Models\SiteSetting::imageUrl('logo', 'img/logo.png') }}" width="140" height="35" alt=""></a>
             </div>
             <ul>
                 <li><a href="{{ route('home') }}">Home</a></li>
@@ -86,7 +86,6 @@
                 <div class="collapse dont-collapse-sm links" id="collapse_1">
                     <ul>
                         <li><a href="{{ route('restaurants.index') }}">All Restaurants</a></li>
-                        <li><a href="{{ route('register') }}">My account</a></li>
                     </ul>
                 </div>
             </div>

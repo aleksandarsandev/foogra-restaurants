@@ -17,7 +17,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-default fixed-top" id="mainNav">
     <a class="navbar-brand" href="{{ route('admin.dashboard') }}">
-        <img src="{{ asset('img/logo.png') }}" alt="Foogra" width="142" height="36">
+        <img src="{{ \App\Models\SiteSetting::imageUrl('logo', 'img/logo.png') }}" alt="Foogra" width="142" height="36">
     </a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive">
         <span class="navbar-toggler-icon"></span>
@@ -49,9 +49,27 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}" href="{{ route('admin.categories.index') }}">
+                    <i class="fa fa-fw fa-tags"></i>
+                    <span class="nav-link-text">Categories</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.cuisines.*') ? 'active' : '' }}" href="{{ route('admin.cuisines.index') }}">
+                    <i class="fa fa-fw fa-cutlery"></i>
+                    <span class="nav-link-text">Cuisines</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin.restaurants.create') }}">
                     <i class="fa fa-fw fa-plus-circle"></i>
                     <span class="nav-link-text">Add Restaurant</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}" href="{{ route('admin.settings.edit') }}">
+                    <i class="fa fa-fw fa-cog"></i>
+                    <span class="nav-link-text">Site Settings</span>
                 </a>
             </li>
         </ul>
