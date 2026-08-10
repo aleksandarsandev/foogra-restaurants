@@ -14,7 +14,7 @@ COPY postcss.config.js* ./
 RUN npm run build
 
 # Stage 2: PHP application
-FROM php:8.3-apache AS app
+FROM php:8.4-apache AS app
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -24,10 +24,12 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     libzip-dev \
+    libcurl4-openssl-dev \
+    libicu-dev \
     unzip \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install PHP extensions
+# Install PHP extensions required by Laravel
 RUN docker-php-ext-install \
     pdo \
     pdo_mysql \
@@ -37,7 +39,11 @@ RUN docker-php-ext-install \
     bcmath \
     gd \
     zip \
-    opcache
+    opcache \
+    curl \
+    dom \
+    xml \
+    intl
 
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
