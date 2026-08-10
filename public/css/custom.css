@@ -2,6 +2,22 @@
 /* Your custom styles below */
 /*============================================================================================*/
 
+.nav-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.5px;
+    margin-right: 6px;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
 .review_card .user_info figure.avatar-initials {
     display: flex;
     align-items: center;

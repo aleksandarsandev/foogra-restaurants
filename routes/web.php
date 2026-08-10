@@ -39,6 +39,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/my-bookings', [UserController::class, 'bookings'])->name('user.bookings');
     Route::get('/my-reviews', [UserController::class, 'reviews'])->name('user.reviews');
     Route::get('/my-restaurants', [RestaurantSubmissionController::class, 'index'])->name('user.restaurants');
+    Route::get('/my-restaurants/{restaurant}/edit', [RestaurantSubmissionController::class, 'edit'])->name('user.restaurants.edit');
+    Route::put('/my-restaurants/{restaurant}', [RestaurantSubmissionController::class, 'update'])->name('user.restaurants.update');
     Route::get('/submit-restaurant', [RestaurantSubmissionController::class, 'create'])->name('restaurants.submit');
     Route::post('/submit-restaurant', [RestaurantSubmissionController::class, 'store']);
 });

@@ -125,6 +125,12 @@
                 </div>
             </div>
 
+            <div class="col-md-12">
+                <h5 class="add_bottom_15 add_top_30">Menu</h5>
+                <p class="text-muted">Add menu sections (e.g. Starters, Main Course) and items within each section.</p>
+                @include('partials.menu-form', ['sections' => collect()])
+            </div>
+
             <div class="col-md-4">
                 <h5 class="add_bottom_15">Settings</h5>
 

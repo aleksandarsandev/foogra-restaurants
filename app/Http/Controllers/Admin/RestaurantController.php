@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Concerns\SavesMenu;
 use App\Models\Category;
 use App\Models\Cuisine;
 use App\Models\Restaurant;
@@ -12,6 +13,7 @@ use Illuminate\Support\Str;
 
 class RestaurantController extends Controller
 {
+    use SavesMenu;
     public function index(Request $request)
     {
         $query = Restaurant::with(['categories', 'cuisines'])->latest();
@@ -53,6 +55,7 @@ class RestaurantController extends Controller
 
         $restaurant->categories()->sync($request->input('categories', []));
         $restaurant->cuisines()->sync($request->input('cuisines', []));
+        $this->saveMenu($restaurant, $request->input('menu', []));
 
         return redirect()->route('admin.restaurants.index')
             ->with('success', 'Restaurant created successfully.');
@@ -60,6 +63,7 @@ class RestaurantController extends Controller
 
     public function edit(Restaurant $restaurant)
     {
+        $restaurant->load('menuSections.items');
         $categories = Category::orderBy('sort_order')->get();
         $cuisines   = Cuisine::orderBy('name')->get();
 
@@ -80,6 +84,7 @@ class RestaurantController extends Controller
         $restaurant->update(array_merge($data, ['is_featured' => $request->boolean('is_featured')]));
         $restaurant->categories()->sync($request->input('categories', []));
         $restaurant->cuisines()->sync($request->input('cuisines', []));
+        $this->saveMenu($restaurant, $request->input('menu', []));
 
         return redirect()->route('admin.restaurants.index')
             ->with('success', 'Restaurant updated successfully.');

@@ -142,6 +142,17 @@
         </aside>
 
         <div class="col-lg-9">
+            <div class="d-flex justify-content-end align-items-center mb-3">
+                <label class="mr-2 mb-0 text-muted" style="white-space:nowrap">Per page:</label>
+                <select class="form-control form-control-sm w-auto" onchange="window.location.href=this.value">
+                    @foreach([3, 9, 18] as $size)
+                    <option value="{{ request()->fullUrlWithQuery(['per_page' => $size, 'page' => 1]) }}"
+                        {{ request('per_page', 9) == $size ? 'selected' : '' }}>
+                        {{ $size }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
             <div class="row">
                 @forelse($restaurants as $restaurant)
                 <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">

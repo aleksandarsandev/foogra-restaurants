@@ -50,8 +50,9 @@ class RestaurantController extends Controller
             default     => $query->orderByDesc('review_count'),
         };
 
-        $restaurants = $query->paginate(12)->withQueryString();
-        $categories  = Category::has('restaurants')->orderBy('sort_order')->get();
+        $perPage = in_array((int) $request->get('per_page'), [3, 9, 18]) ? (int) $request->get('per_page') : 9;
+        $restaurants = $query->paginate($perPage)->withQueryString();
+        $categories  = Category::orderBy('sort_order')->orderBy('name')->get();
         $cuisines    = Cuisine::orderBy('name')->get();
 
         return view('restaurants.index', compact('restaurants', 'categories', 'cuisines'));
@@ -60,7 +61,7 @@ class RestaurantController extends Controller
     public function show(string $slug)
     {
         $query = Restaurant::where('slug', $slug)
-            ->with(['categories', 'cuisines', 'images', 'approvedReviews.user']);
+            ->with(['categories', 'cuisines', 'images', 'approvedReviews.user', 'menuSections.items']);
 
         if (!auth()->check() || !auth()->user()->isAdmin()) {
             $query->where('status', 'active');

@@ -9,7 +9,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $categories = Category::has('restaurants')->orderBy('sort_order')->get();
+        $categories = Category::orderBy('sort_order')->get();
         $featured = Restaurant::where('status', 'active')
             ->where('is_featured', true)
             ->with(['categories'])

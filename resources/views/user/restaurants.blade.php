@@ -67,11 +67,12 @@
                             <span class="badge bg-{{ $badge }} px-3 py-2" style="font-size:0.85rem">
                                 {{ ucfirst($restaurant->status) }}
                             </span>
-                            @if($restaurant->status === 'active')
-                            <div class="mt-2">
+                            <div class="mt-2 d-flex gap-2 justify-content-end flex-wrap">
+                                @if($restaurant->status === 'active')
                                 <a href="{{ route('restaurants.show', $restaurant->slug) }}" class="btn_1 small">View</a>
+                                @endif
+                                <a href="{{ route('user.restaurants.edit', $restaurant) }}" class="btn_1 small">Edit</a>
                             </div>
-                            @endif
                             @if($restaurant->status === 'pending')
                             <p class="text-muted mt-2 mb-0"><small>Awaiting admin approval</small></p>
                             @endif

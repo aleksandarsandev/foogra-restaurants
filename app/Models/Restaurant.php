@@ -44,6 +44,11 @@ class Restaurant extends Model
         return $this->hasMany(RestaurantImage::class)->orderBy('sort_order');
     }
 
+    public function menuSections()
+    {
+        return $this->hasMany(MenuSection::class)->orderBy('sort_order');
+    }
+
     public function reviews()
     {
         return $this->hasMany(Review::class);

@@ -44,8 +44,19 @@
                     <li><a href="{{ route('register') }}">Sign Up</a></li>
                 @endguest
                 @auth
+                @php
+                    $navUser = auth()->user();
+                    $navInitials = collect(explode(' ', $navUser->name))
+                        ->map(fn($w) => strtoupper($w[0] ?? ''))
+                        ->take(2)->implode('');
+                    $navPalette = ['#e74c3c','#3498db','#2ecc71','#f39c12','#9b59b6','#1abc9c','#e67e22','#34495e'];
+                    $navColor = $navPalette[ord($navUser->name[0]) % count($navPalette)];
+                @endphp
                     <li class="submenu">
-                        <a href="#0" class="show-submenu">{{ auth()->user()->name }}</a>
+                        <a href="#0" class="show-submenu d-flex align-items-center">
+                            <span class="nav-avatar" style="background-color:{{ $navColor }}">{{ $navInitials }}</span>
+                            {{ $navUser->name }}
+                        </a>
                         <ul>
                             <li><a href="{{ route('user.bookings') }}" style="background:none;padding:7px 15px;font-size:0.8125rem;font-family:'Poppins',sans-serif;color:#444;">My Bookings</a></li>
                             <li><a href="{{ route('user.reviews') }}" style="background:none;padding:7px 15px;font-size:0.8125rem;font-family:'Poppins',sans-serif;color:#444;">My Reviews</a></li>
