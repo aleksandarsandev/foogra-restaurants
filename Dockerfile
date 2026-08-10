@@ -26,6 +26,7 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     libcurl4-openssl-dev \
     libicu-dev \
+    libpq-dev \
     unzip \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -43,7 +44,9 @@ RUN docker-php-ext-install \
     curl \
     dom \
     xml \
-    intl
+    intl \
+    pdo_pgsql \
+    pgsql
 
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -81,4 +84,7 @@ RUN composer run-script post-autoload-dump
 
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+CMD ["/usr/local/bin/docker-entrypoint.sh"]
