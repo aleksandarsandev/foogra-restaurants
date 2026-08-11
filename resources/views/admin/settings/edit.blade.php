@@ -36,7 +36,7 @@
                 } elseif (str_starts_with($current, 'img/')) {
                     $currentUrl = asset($current);
                 } else {
-                    $currentUrl = asset('storage/' . $current);
+                    $currentUrl = \Illuminate\Support\Facades\Storage::disk('s3')->url($current);
                 }
             @endphp
             <div class="row align-items-center mb-4 pb-4 border-bottom">

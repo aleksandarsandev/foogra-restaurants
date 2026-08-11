@@ -8,8 +8,11 @@
 
 @section('content')
 
-@php $heroUrl = \App\Models\SiteSetting::getValue('home_section_1'); @endphp
-<div class="hero_single version_2"{{ $heroUrl ? ' style="background-image: url('.asset('storage/'.$heroUrl).');"' : '' }}>
+@php
+    $heroUrl = \App\Models\SiteSetting::getValue('home_section_1');
+    $heroBgUrl = $heroUrl ? (str_starts_with($heroUrl, 'img/') ? asset($heroUrl) : \Illuminate\Support\Facades\Storage::disk('s3')->url($heroUrl)) : null;
+@endphp
+<div class="hero_single version_2"{{ $heroBgUrl ? ' style="background-image: url('.$heroBgUrl.');"' : '' }}>
     <div class="opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.6)">
         <div class="container">
             <div class="row justify-content-center">

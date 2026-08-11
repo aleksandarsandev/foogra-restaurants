@@ -44,7 +44,7 @@ class RestaurantController extends Controller
         $data = $this->validateRestaurant($request);
 
         if ($request->hasFile('featured_image')) {
-            $data['featured_image'] = $request->file('featured_image')->store('restaurants', 'public');
+            $data['featured_image'] = $request->file('featured_image')->store('restaurants', 's3');
         }
 
         $restaurant = Restaurant::create([
@@ -75,10 +75,10 @@ class RestaurantController extends Controller
         $data = $this->validateRestaurant($request, $restaurant->id);
 
         if ($request->hasFile('featured_image')) {
-            if ($restaurant->featured_image) {
-                Storage::disk('public')->delete($restaurant->featured_image);
+            if ($restaurant->featured_image && !str_starts_with($restaurant->featured_image, 'img/')) {
+                Storage::disk('s3')->delete($restaurant->featured_image);
             }
-            $data['featured_image'] = $request->file('featured_image')->store('restaurants', 'public');
+            $data['featured_image'] = $request->file('featured_image')->store('restaurants', 's3');
         }
 
         $restaurant->update(array_merge($data, ['is_featured' => $request->boolean('is_featured')]));
@@ -92,8 +92,8 @@ class RestaurantController extends Controller
 
     public function destroy(Restaurant $restaurant)
     {
-        if ($restaurant->featured_image) {
-            Storage::disk('public')->delete($restaurant->featured_image);
+        if ($restaurant->featured_image && !str_starts_with($restaurant->featured_image, 'img/')) {
+            Storage::disk('s3')->delete($restaurant->featured_image);
         }
         $restaurant->delete();
 

@@ -42,7 +42,7 @@ class RestaurantSubmissionController extends Controller
         ]);
 
         if ($request->hasFile('featured_image')) {
-            $data['featured_image'] = $request->file('featured_image')->store('restaurants', 'public');
+            $data['featured_image'] = $request->file('featured_image')->store('restaurants', 's3');
         }
 
         $restaurant = Restaurant::create([
@@ -97,9 +97,9 @@ class RestaurantSubmissionController extends Controller
 
         if ($request->hasFile('featured_image')) {
             if ($restaurant->featured_image && !str_starts_with($restaurant->featured_image, 'img/')) {
-                Storage::disk('public')->delete($restaurant->featured_image);
+                Storage::disk('s3')->delete($restaurant->featured_image);
             }
-            $data['featured_image'] = $request->file('featured_image')->store('restaurants', 'public');
+            $data['featured_image'] = $request->file('featured_image')->store('restaurants', 's3');
         }
 
         $restaurant->update($data);

@@ -28,7 +28,7 @@ class SettingsController extends Controller
             if ($def['type'] === 'text') {
                 SiteSetting::set($key, $request->input("texts.$key") ?? $def['default']);
             } elseif ($request->hasFile("images.$key")) {
-                $path = $request->file("images.$key")->store('settings', 'public');
+                $path = $request->file("images.$key")->store('settings', 's3');
                 SiteSetting::set($key, $path);
             } elseif ($request->boolean("remove.$key")) {
                 SiteSetting::set($key, $def['default']);

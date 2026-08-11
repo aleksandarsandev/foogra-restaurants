@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Restaurant extends Model
@@ -93,12 +94,10 @@ class Restaurant extends Model
     public function getFeaturedImageUrlAttribute(): string
     {
         if ($this->featured_image) {
-            // public img/ path (template images used in seeder)
             if (str_starts_with($this->featured_image, 'img/')) {
                 return asset($this->featured_image);
             }
-            // uploaded file stored in storage
-            return asset('storage/' . $this->featured_image);
+            return Storage::disk('s3')->url($this->featured_image);
         }
         // fallback: cycle through template images
         $index = ($this->id % 12) ?: 12;
