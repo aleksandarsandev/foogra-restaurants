@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class SiteSetting extends Model
 {
@@ -28,7 +29,7 @@ class SiteSetting extends Model
         if (!$value) return asset($default);
         // img/ prefix = static public asset (default seeded value)
         if (str_starts_with($value, 'img/')) return asset($value);
-        return asset('storage/' . $value);
+        return Storage::disk('s3')->url($value);
     }
 
     public static function set(string $key, ?string $value): void
